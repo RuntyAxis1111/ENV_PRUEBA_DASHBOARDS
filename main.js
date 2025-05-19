@@ -135,6 +135,15 @@ function handleSelection(event, items) {
   if (!activeSection) return;
 
   const currentTabId = activeSection.id;
+
+  // --- Check for Public Relations link and redirect ---
+  if (currentTabId === 'palf' && itemId === 'public-relations' && selectedItem.palfReportUrl) {
+    window.location.href = selectedItem.palfReportUrl;
+    return; // Stop further execution for this case
+  }
+  // --- End Check for Public Relations link and redirect ---
+
+
   const currentGridContainer = activeSection.querySelector('.grid-container');
   if (!currentGridContainer) return;
 
