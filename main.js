@@ -1,8 +1,14 @@
 // Data structure for artists, palf, and truvatos
 const data = {
   artists: [
-    { id: 'artist1', name: 'Artist 1', reportUrls: ['https://lookerstudio.google.com/embed/reporting/abc123/page/p_def456'] },
-    { id: 'artist2', name: 'Artist 2', reportUrls: ['https://lookerstudio.google.com/embed/reporting/ghi789/page/p_jkl012'] },
+    { id: 'daddy-yankee', name: 'DADDY YANKEE', reportUrls: ['https://lookerstudio.google.com/embed/reporting/0114febd-b174-4d34-8e78-f6b10a94535f/page/gnpEF'] },
+    { id: 'bts', name: 'BTS', reportUrls: ['https://lookerstudio.google.com/embed/reporting/0ec3d1cf-547b-4e66-8c81-77921c1cab64/page/gnpEF'] },
+    { id: 'chicocurlyhead', name: 'CHICOCURLYHEAD', reportUrls: ['https://lookerstudio.google.com/embed/reporting/2cdea0f6-6583-4f4d-8500-b0a58e677dc6/page/gnpEF'] },
+    { id: 'magna', name: 'MAGNA', reportUrls: ['https://lookerstudio.google.com/embed/reporting/d53caf15-04e7-4737-b2ab-d9b47a9752e9/page/gnpEF'] },
+    { id: 'adrian-cota', name: 'ADRIAN COTA', reportUrls: ['https://lookerstudio.google.com/embed/reporting/a1f0ea40-c3b2-4df5-979d-4ab132a2b7ec/page/gnpEF'] },
+    { id: 'meme-del-real', name: 'MEME DEL REAL', reportUrls: ['https://lookerstudio.google.com/embed/reporting/ce6d6f8f-4e3e-458f-ad76-7bd16651cd52/page/gnpEF'] },
+    { id: 'andrea-ele', name: 'ANDREA ELE', reportUrls: ['https://lookerstudio.google.com/embed/reporting/andrea-ele-report-id/page/p_andreaele'] }, // Placeholder URL if not provided
+    { id: 'america-fernandez', name: 'AMÉRICA FERNÁNDEZ', reportUrls: ['https://lookerstudio.google.com/embed/reporting/01360d8d-5515-477c-819d-11ecba384212/page/gnpEF'] },
     // Add more artists as needed
   ],
   palf: {
@@ -16,15 +22,20 @@ const data = {
       { id: 'instagram', name: 'INSTAGRAM', icon: 'Instagram', palfReportUrl: 'https://lookerstudio.google.com/embed/reporting/ec282e0b-ed12-4e16-938b-b938328b5cda/page/gnpEF' },
       { id: 'youtube', name: 'YOUTUBE', icon: 'YouTube', palfReportUrl: 'https://lookerstudio.google.com/embed/reporting/5a14b2b1-b972-4fb7-843c-dbb1b6cfb11e/page/gnpEF' },
       { id: 'tiktok', name: 'TIKTOK (WORKING)', icon: 'TikTok', palfReportUrl: 'https://lookerstudio.google.com/embed/reporting/b4a8cec2-b9a5-4db4-8370-c9594f08c39d/page/gnpEF' },
-      { id: 'public-relations', name: 'PUBLIC RELATIONS', icon: 'Public Relations', palfReportUrl: 'https://lookerstudio.google.com/embed/reporting/palf-pr-report-id/page/p_pr' }, // Placeholder URL
+      { id: 'public-relations', name: 'PUBLIC RELATIONS', icon: 'Public Relations', palfReportUrl: 'https://dancing-swan-64a0b2.netlify.app/' }, // Updated URL
       { id: 'facebook', name: 'FACEBOOK', icon: 'Facebook', palfReportUrl: 'https://lookerstudio.google.com/embed/reporting/43a608b8-7c3d-4ba2-a08a-21991d52dcd7/page/gnpEF' },
       // Add more social media/sections as needed for PALF
     ],
   },
   truvatos: [
-    { id: 'truvato1', name: 'Truvato Artist 1', truvatosReportUrl: 'https://lookerstudio.google.com/embed/reporting/truvatos-report-id-1/page/p_truvato1' },
-    { id: 'truvato2', name: 'Truvato Artist 2', truvatosReportUrl: 'https://lookerstudio.google.com/embed/reporting/truvatos-report-id-2/page/p_truvato2' },
-    // Add more truvatos artists as needed
+    // Truvatos will use the same social media list as PALF, but all will point to the PALF TikTok URL
+    { id: 'twitter', name: 'X (TWITTER)', icon: 'X', truvatosReportUrl: 'https://lookerstudio.google.com/embed/reporting/b4a8cec2-b9a5-4db4-8370-c9594f08c39d/page/gnpEF' },
+    { id: 'instagram', name: 'INSTAGRAM', icon: 'Instagram', truvatosReportUrl: 'https://lookerstudio.google.com/embed/reporting/b4a8cec2-b9a5-4db4-8370-c9594f08c39d/page/gnpEF' },
+    { id: 'youtube', name: 'YOUTUBE', icon: 'YouTube', truvatosReportUrl: 'https://lookerstudio.google.com/embed/reporting/b4a8cec2-b9a5-4db4-8370-c9594f08c39d/page/gnpEF' },
+    { id: 'tiktok', name: 'TIKTOK (WORKING)', icon: 'TikTok', truvatosReportUrl: 'https://lookerstudio.google.com/embed/reporting/b4a8cec2-b9a5-4db4-8370-c9594f08c39d/page/gnpEF' },
+    { id: 'public-relations', name: 'PUBLIC RELATIONS', icon: 'Public Relations', truvatosReportUrl: 'https://lookerstudio.google.com/embed/reporting/b4a8cec2-b9a5-4db4-8370-c9594f08c39d/page/gnpEF' },
+    { id: 'facebook', name: 'FACEBOOK', icon: 'Facebook', truvatosReportUrl: 'https://lookerstudio.google.com/embed/reporting/b4a8cec2-b9a5-4db4-8370-c9594f08c39d/page/gnpEF' },
+    // Add more social media/sections as needed for Truvatos, all using the same TikTok URL
   ]
 };
 
@@ -214,10 +225,11 @@ function switchTab(tabId) {
         }
       }
     } else if (tabId === 'truvatos') {
+      // For Truvatos, populate sidebar with social media items (using PALF structure)
       populateSidebar('truvatos', data.truvatos);
       createPanels('truvatos', data.truvatos);
       selectedPalfBandId = null; // Reset PALF band selection
-       // Select the first truvato by default
+       // Select the first truvato social media item by default
        if (data.truvatos.length > 0) {
         const firstTruvatoLi = document.querySelector('#truvatos-list li:first-child');
         if (firstTruvatoLi) {
@@ -290,9 +302,7 @@ switchTab('artists');
 const privateDataButton = document.getElementById('private-data-button');
 if (privateDataButton) {
   privateDataButton.addEventListener('click', () => {
-    // Replace with actual logic for accessing private data
-    alert('Accessing Private Data...');
-    // Example: Redirect to a different page or show a modal
-    // window.location.href = '/private-data-page.html';
+    // Redirect to the Private Data URL
+    window.location.href = 'https://data.hybelatinamerica.com/';
   });
 }
