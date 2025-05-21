@@ -1,3 +1,31 @@
+// Password protection
+const passwordOverlay = document.getElementById('password-overlay');
+const passwordInput = document.getElementById('password-input');
+const submitButton = document.getElementById('submit-password');
+const errorMessage = document.getElementById('error-message');
+
+const correctPassword = "1999";
+
+function checkPassword() {
+  const enteredPassword = passwordInput.value;
+  if (enteredPassword === correctPassword) {
+    passwordOverlay.style.display = 'none';
+  } else {
+    errorMessage.textContent = 'Incorrect password';
+    passwordInput.value = '';
+    setTimeout(() => {
+      window.location.href = 'https://www.google.com';
+    }, 1000);
+  }
+}
+
+submitButton.addEventListener('click', checkPassword);
+passwordInput.addEventListener('keypress', (event) => {
+  if (event.key === 'Enter') {
+    checkPassword();
+  }
+});
+
 // Data structure for artists, palf, and truvatos
 const data = {
   artists: [
@@ -7,9 +35,8 @@ const data = {
     { id: 'magna', name: 'MAGNA', reportUrls: ['https://lookerstudio.google.com/embed/reporting/d53caf15-04e7-4737-b2ab-d9b47a9752e9/page/gnpEF'] },
     { id: 'adrian-cota', name: 'ADRIAN COTA', reportUrls: ['https://lookerstudio.google.com/embed/reporting/a1f0ea40-c3b2-4df5-979d-4ab132a2b7ec/page/gnpEF'] },
     { id: 'meme-del-real', name: 'MEME DEL REAL', reportUrls: ['https://lookerstudio.google.com/embed/reporting/ce6d6f8f-4e3e-458f-ad76-7bd16651cd52/page/gnpEF'] },
-    { id: 'andrea-ele', name: 'ANDREA ELE', reportUrls: ['https://lookerstudio.google.com/embed/reporting/andrea-ele-report-id/page/p_andreaele'] }, // Placeholder URL if not provided
+    { id: 'andrea-ele', name: 'ANDREA ELE', reportUrls: ['https://lookerstudio.google.com/embed/reporting/andrea-ele-report-id/page/p_andreaele'] },
     { id: 'america-fernandez', name: 'AMÉRICA FERNÁNDEZ', reportUrls: ['https://lookerstudio.google.com/embed/reporting/01360d8d-5515-477c-819d-11ecba384212/page/gnpEF'] },
-    // Add more artists as needed
   ],
   palf: {
     bands: [
@@ -22,39 +49,33 @@ const data = {
       { id: 'instagram', name: 'INSTAGRAM', icon: 'Instagram', palfReportUrl: 'https://lookerstudio.google.com/embed/reporting/ec282e0b-ed12-4e16-938b-b938328b5cda/page/gnpEF' },
       { id: 'youtube', name: 'YOUTUBE', icon: 'YouTube', palfReportUrl: 'https://lookerstudio.google.com/embed/reporting/5a14b2b1-b972-4fb7-843c-dbb1b6cfb11e/page/gnpEF' },
       { id: 'tiktok', name: 'TIKTOK (WORKING)', icon: 'TikTok', palfReportUrl: 'https://lookerstudio.google.com/embed/reporting/b4a8cec2-b9a5-4db4-8370-c9594f08c39d/page/gnpEF' },
-      { id: 'public-relations', name: 'PUBLIC RELATIONS', icon: 'Public Relations', palfReportUrl: 'https://dancing-swan-64a0b2.netlify.app/' }, // Updated URL
+      { id: 'public-relations', name: 'PUBLIC RELATIONS', icon: 'Public Relations', palfReportUrl: 'https://dancing-swan-64a0b2.netlify.app/' },
       { id: 'facebook', name: 'FACEBOOK', icon: 'Facebook', palfReportUrl: 'https://lookerstudio.google.com/embed/reporting/43a608b8-7c3d-4ba2-a08a-21991d52dcd7/page/gnpEF' },
-      // Add more social media/sections as needed for PALF
     ],
   },
   truvatos: [
-    // Truvatos will use the same social media list as PALF, but all will point to the PALF TikTok URL
     { id: 'twitter', name: 'X (TWITTER)', icon: 'X', truvatosReportUrl: 'https://lookerstudio.google.com/embed/reporting/b4a8cec2-b9a5-4db4-8370-c9594f08c39d/page/gnpEF' },
     { id: 'instagram', name: 'INSTAGRAM', icon: 'Instagram', truvatosReportUrl: 'https://lookerstudio.google.com/embed/reporting/b4a8cec2-b9a5-4db4-8370-c9594f08c39d/page/gnpEF' },
     { id: 'youtube', name: 'YOUTUBE', icon: 'YouTube', truvatosReportUrl: 'https://lookerstudio.google.com/embed/reporting/b4a8cec2-b9a5-4db4-8370-c9594f08c39d/page/gnpEF' },
     { id: 'tiktok', name: 'TIKTOK (WORKING)', icon: 'TikTok', truvatosReportUrl: 'https://lookerstudio.google.com/embed/reporting/b4a8cec2-b9a5-4db4-8370-c9594f08c39d/page/gnpEF' },
     { id: 'public-relations', name: 'PUBLIC RELATIONS', icon: 'Public Relations', truvatosReportUrl: 'https://lookerstudio.google.com/embed/reporting/b4a8cec2-b9a5-4db4-8370-c9594f08c39d/page/gnpEF' },
     { id: 'facebook', name: 'FACEBOOK', icon: 'Facebook', truvatosReportUrl: 'https://lookerstudio.google.com/embed/reporting/b4a8cec2-b9a5-4db4-8370-c9594f08c39d/page/gnpEF' },
-    // Add more social media/sections as needed for Truvatos, all using the same TikTok URL
   ]
 };
 
-let selectedPalfBandId = null; // To keep track of the selected PALF band
+let selectedPalfBandId = null;
 
-// Get elements
 const navButtons = document.querySelectorAll('.nav-button');
 const contentSections = document.querySelectorAll('.content-section');
 const sidebarTab = document.querySelector('.sidebar-tab');
 const body = document.body;
 const palfBandButtonsContainer = document.getElementById('palf-band-buttons');
 
-// Function to toggle sidebar
 function toggleSidebar() {
   const isOpen = body.classList.toggle('sidebar-open');
   sidebarTab.setAttribute('aria-expanded', isOpen);
 }
 
-// Add event listeners for sidebar tab
 sidebarTab.addEventListener('click', toggleSidebar);
 sidebarTab.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
@@ -62,12 +83,11 @@ sidebarTab.addEventListener('keydown', (e) => {
   }
 });
 
-// Function to populate sidebar list
 function populateSidebar(sectionId, items) {
   const listElement = document.getElementById(`${sectionId}-list`);
   if (!listElement) return;
 
-  listElement.innerHTML = ''; // Clear current list
+  listElement.innerHTML = '';
 
   items.forEach(item => {
     const listItem = document.createElement('li');
@@ -78,28 +98,27 @@ function populateSidebar(sectionId, items) {
   });
 }
 
-// Function to create panels (now creates all panels but keeps them hidden)
 function createPanels(sectionId, items) {
   const gridContainer = document.getElementById(`${sectionId}-grid-container`);
   if (!gridContainer) return;
 
-  gridContainer.innerHTML = ''; // Clear current panels
+  gridContainer.innerHTML = '';
 
   items.forEach(item => {
     const panel = document.createElement('div');
     panel.classList.add('panel');
-    panel.dataset.itemId = item.id; // Add data attribute for item ID
+    panel.dataset.itemId = item.id;
 
     const panelHeader = document.createElement('div');
     panelHeader.classList.add('panel-header');
 
     const panelTitle = document.createElement('span');
     panelTitle.classList.add('panel-title');
-    panelTitle.textContent = `${item.name} Panel`; // Placeholder title
+    panelTitle.textContent = `${item.name} Panel`;
 
     const panelIcon = document.createElement('span');
     panelIcon.classList.add('material-icons');
-    panelIcon.textContent = 'insert_chart'; // Placeholder icon
+    panelIcon.textContent = 'insert_chart';
 
     panelHeader.appendChild(panelTitle);
     panelHeader.appendChild(panelIcon);
@@ -113,7 +132,7 @@ function createPanels(sectionId, items) {
     iframe.style.border = "0";
     iframe.allowfullscreen = true;
     iframe.sandbox = "allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox";
-    iframe.src = 'about:blank'; // Start with a blank page
+    iframe.src = 'about:blank';
 
     panelContent.appendChild(iframe);
     panel.appendChild(panelHeader);
@@ -122,7 +141,6 @@ function createPanels(sectionId, items) {
   });
 }
 
-// Function to handle selection from sidebar list
 function handleSelection(event, items) {
   const selectedLi = event.target;
   const itemId = selectedLi.dataset.itemId;
@@ -130,33 +148,27 @@ function handleSelection(event, items) {
 
   if (!selectedItem) return;
 
-  // Find the active section
   const activeSection = document.querySelector('.content-section.active');
   if (!activeSection) return;
 
   const currentTabId = activeSection.id;
 
-  // --- Check for Public Relations link and redirect ---
   if (currentTabId === 'palf' && itemId === 'public-relations' && selectedItem.palfReportUrl) {
     window.location.href = selectedItem.palfReportUrl;
-    return; // Stop further execution for this case
+    return;
   }
-  // --- End Check for Public Relations link and redirect ---
-
 
   const currentGridContainer = activeSection.querySelector('.grid-container');
   if (!currentGridContainer) return;
 
-  // Hide all panels in the current section
   currentGridContainer.querySelectorAll('.panel').forEach(panel => {
     panel.classList.remove('active-panel');
     const iframe = panel.querySelector('iframe');
     if (iframe) {
-      iframe.src = 'about:blank'; // Clear iframe source
+      iframe.src = 'about:blank';
     }
   });
 
-  // Find the selected panel and make it active
   const targetPanel = currentGridContainer.querySelector(`.panel[data-item-id="${itemId}"]`);
   if (targetPanel) {
     targetPanel.classList.add('active-panel');
@@ -166,7 +178,7 @@ function handleSelection(event, items) {
       if (currentTabId === 'palf') {
          targetUrl = selectedItem.palfReportUrl || 'about:blank';
       } else if (currentTabId === 'artists' && selectedItem.reportUrls && selectedItem.reportUrls.length > 0) {
-        targetUrl = selectedItem.reportUrls[0]; // Assuming the first URL for artists
+        targetUrl = selectedItem.reportUrls[0];
       } else if (currentTabId === 'truvatos' && selectedItem.truvatosReportUrl) {
         targetUrl = selectedItem.truvatosReportUrl;
       }
@@ -174,7 +186,6 @@ function handleSelection(event, items) {
     }
   }
 
-  // Update active states in the sidebar list
   const currentList = activeSection.querySelector('ul');
   if (currentList) {
     currentList.querySelectorAll('li').forEach(li => {
@@ -182,21 +193,13 @@ function handleSelection(event, items) {
     });
     selectedLi.classList.add('active');
   }
-
-  // Keep sidebar open as per the image
-  // body.classList.remove('sidebar-open');
-  // sidebarTab.setAttribute('aria-expanded', 'false');
 }
 
-
-// Function to handle tab switching
 function switchTab(tabId) {
-  // Deactivate all nav buttons and content sections
   navButtons.forEach(button => button.classList.remove('active'));
   contentSections.forEach(section => section.classList.remove('active'));
-  palfBandButtonsContainer.classList.remove('active'); // Hide band buttons by default
+  palfBandButtonsContainer.classList.remove('active');
 
-  // Activate the selected tab button and content section
   const activeNavButton = document.querySelector(`.nav-button[data-tab="${tabId}"]`);
   const activeContentSection = document.getElementById(tabId);
 
@@ -204,59 +207,48 @@ function switchTab(tabId) {
     activeNavButton.classList.add('active');
     activeContentSection.classList.add('active');
 
-    // Populate sidebar and create panels based on the active tab
     if (tabId === 'artists') {
       populateSidebar('artists', data.artists);
       createPanels('artists', data.artists);
-      selectedPalfBandId = null; // Reset PALF band selection
-      // Select the first artist by default
+      selectedPalfBandId = null;
       if (data.artists.length > 0) {
         const firstArtistLi = document.querySelector('#artists-list li:first-child');
         if (firstArtistLi) {
-           // Simulate click on the first item
            handleSelection({ target: firstArtistLi }, data.artists);
         }
       }
     } else if (tabId === 'palf') {
-      // For PALF, populate sidebar with social media items
       populateSidebar('palf', data.palf.socialMedia);
       createPanels('palf', data.palf.socialMedia);
-      palfBandButtonsContainer.classList.add('active'); // Show band buttons for PALF
-      populatePalfBandButtons(); // Populate PALF band buttons
-      selectedPalfBandId = null; // Reset PALF band selection initially
-      // Select the Twitter panel by default for PALF
+      palfBandButtonsContainer.classList.add('active');
+      populatePalfBandButtons();
+      selectedPalfBandId = null;
       const twitterItem = data.palf.socialMedia.find(item => item.id === 'twitter');
       if (twitterItem) {
         const twitterLi = document.querySelector('#palf-list li[data-item-id="twitter"]');
         if (twitterLi) {
-          // Simulate click on the Twitter item
           handleSelection({ target: twitterLi }, data.palf.socialMedia);
         }
       }
     } else if (tabId === 'truvatos') {
-      // For Truvatos, populate sidebar with social media items (using PALF structure)
       populateSidebar('truvatos', data.truvatos);
       createPanels('truvatos', data.truvatos);
-      selectedPalfBandId = null; // Reset PALF band selection
-       // Select the first truvato social media item by default
+      selectedPalfBandId = null;
        if (data.truvatos.length > 0) {
         const firstTruvatoLi = document.querySelector('#truvatos-list li:first-child');
         if (firstTruvatoLi) {
-           // Simulate click on the first item
            handleSelection({ target: firstTruvatoLi }, data.truvatos);
         }
       }
     }
 
-    // Ensure sidebar is open when switching tabs
     body.classList.add('sidebar-open');
     sidebarTab.setAttribute('aria-expanded', 'true');
   }
 }
 
-// Function to populate PALF band buttons
 function populatePalfBandButtons() {
-  palfBandButtonsContainer.innerHTML = ''; // Clear current buttons
+  palfBandButtonsContainer.innerHTML = '';
 
   data.palf.bands.forEach(band => {
     const button = document.createElement('button');
@@ -268,11 +260,9 @@ function populatePalfBandButtons() {
   });
 }
 
-// Function to handle PALF band selection
 function handlePalfBandSelection(bandId) {
   selectedPalfBandId = bandId;
 
-  // Update active state for band buttons
   palfBandButtonsContainer.querySelectorAll('.band-button').forEach(button => {
     button.classList.remove('active');
     if (button.dataset.bandId === bandId) {
@@ -280,23 +270,18 @@ function handlePalfBandSelection(bandId) {
     }
   });
 
-  // When a band is selected, default to showing the Twitter panel
   const twitterItem = data.palf.socialMedia.find(item => item.id === 'twitter');
   if (twitterItem) {
     const twitterLi = document.querySelector('#palf-list li[data-item-id="twitter"]');
     if (twitterLi) {
-      // Simulate click on the Twitter item
       handleSelection({ target: twitterLi }, data.palf.socialMedia);
     }
   }
 
-  // Ensure sidebar is open after band selection
   body.classList.add('sidebar-open');
   sidebarTab.setAttribute('aria-expanded', 'true');
 }
 
-
-// Add event listeners for main navigation buttons
 navButtons.forEach(button => {
   button.addEventListener('click', () => {
     const tabId = button.dataset.tab;
@@ -304,14 +289,11 @@ navButtons.forEach(button => {
   });
 });
 
-// Initialize the dashboard by showing the default tab (e.g., 'artists')
 switchTab('artists');
 
-// Add event listener for the Private Data button (example)
 const privateDataButton = document.getElementById('private-data-button');
 if (privateDataButton) {
   privateDataButton.addEventListener('click', () => {
-    // Redirect to the Private Data URL
     window.location.href = 'https://data.hybelatinamerica.com/';
   });
 }
